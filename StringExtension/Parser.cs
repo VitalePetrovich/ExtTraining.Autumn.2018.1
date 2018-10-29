@@ -29,8 +29,7 @@ namespace StringExtension
                 { 'E', 14 },
                 { 'F', 15 }
             };
-
-           
+            
             if (source == null)
                 throw new ArgumentNullException();
 
@@ -48,7 +47,8 @@ namespace StringExtension
                     throw new ArgumentException(nameof(source));  
             }
 
-
+            if (source.Length > 32 / (@base / 2))
+                throw new ArgumentException();
 
             int pow = 0;
             int ans = 0;
