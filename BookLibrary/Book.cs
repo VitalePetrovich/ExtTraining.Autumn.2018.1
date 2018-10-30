@@ -64,15 +64,15 @@ namespace BookLibrary
                 case "G":
                 case "C":
                     return
-                        $"- Book record: {this.Author.ToString(provider)}, {this.Title.ToString(provider)}, {this.Year.ToString(provider)}, {PublishingHous.ToString(provider)}";
+                        $"{this.Author.ToString(provider)}, {this.Title.ToString(provider)}, {this.Year.ToString(provider)}, {PublishingHous.ToString(provider)}";
                 case "Y":
-                    return $"- Book record: {this.Author.ToString(provider)}, {this.Title.ToString(provider)}, {this.Year.ToString(provider)}";
+                    return $"{this.Author.ToString(provider)}, {this.Title.ToString(provider)}, {this.Year.ToString(provider)}";
                 case "S":
-                    return $"- Book record: {this.Author.ToString(provider)}, {this.Title.ToString(provider)}";
+                    return $"{this.Author.ToString(provider)}, {this.Title.ToString(provider)}";
                 case "P":
-                    return $"- Book record: {this.Title.ToString(provider)}, {this.Year.ToString(provider)}, {this.PublishingHous.ToString(provider)}";
+                    return $"{this.Title.ToString(provider)}, {this.Year.ToString(provider)}, {this.PublishingHous.ToString(provider)}";
                 case "T":
-                    return $"- Book record: {this.Title.ToString(provider)}";
+                    return $"{this.Title.ToString(provider)}";
                 default:
                     throw new FormatException($"The {format} format string is not supported.");
             }
