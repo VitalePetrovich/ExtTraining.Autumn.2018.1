@@ -7,28 +7,28 @@ using System.Threading.Tasks;
 
 namespace BookLibrary
 {
-    public class Book : IFormattable
+    public class Book : IFormattable, IComparable<Book>, IComparable, IEquatable<Book>
     {
-       public string Title { get; }
-       public string Author { get; }
-       public string Year { get; }
-       public string PublishingHous { get; }
-       public string Edition { get; }
-       public string Pages { get; }
-       public string Price { get; }
-
+        public string Title { get; }
+        public string Author { get; }
+        public string Year { get; }
+        public string PublishingHous { get; }
+        public int Edition { get; }
+        public int Pages { get; }
+        public decimal Price { get; }
+        
         public Book()
         {
             this.Title = null;
             this.Author = null;
             this.Year = null;
             this.PublishingHous = null;
-            this.Edition = null;
-            this.Pages = null;
-            this.Price = null;
+            this.Edition = 0;
+            this.Pages = 0;
+            this.Price = 0;
         }
 
-        public Book(string title, string author, string year, string publishingHous, string edition, string pages, string price)
+        public Book(string title, string author, string year, string publishingHous, int edition, int pages, decimal price)
         {
             this.Title = title;
             this.Author = author;
@@ -38,13 +38,55 @@ namespace BookLibrary
             this.Pages = pages;
             this.Price = price;
         }
+        
+        public int CompareTo(Book other)
+        {
+            return string.Compare(this.Title, other?.Title, StringComparison.InvariantCulture);
+        }
 
+        public int CompareTo(object obj)
+        {
+            return this.CompareTo((Book)obj);
+        }
+        
+        public bool Equals(Book other)
+        {
+            if (this.GetType() != other.GetType())
+                return false;
+
+            if (this.GetHashCode() != other?.GetHashCode())
+                return false;
+
+            if (this.Title != other.Title ||
+                this.Author != other.Author ||
+                this.Year != other.Year ||
+                this.PublishingHous != other.PublishingHous ||
+                this.Edition != other.Edition ||
+                this.Pages != other.Pages ||
+                this.Price != other.Price)
+            {
+                return false;
+            }
+
+            return true;
+        }
+        
         //Override object method.
         public override string ToString()
         {
             return this.ToString("G", CultureInfo.CurrentCulture);
         }
-        
+
+        public override bool Equals(object obj)
+        {
+            return this.Equals(obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return this.Pages;
+        }
+
         //Implementing IFormattable.
         public string ToString(string format)
         {
@@ -73,6 +115,8 @@ namespace BookLibrary
                     return $"{this.Title.ToString(provider)}, {this.Year.ToString(provider)}, {this.PublishingHous.ToString(provider)}";
                 case "T":
                     return $"{this.Title.ToString(provider)}";
+                case "PR":
+                    return $"{this.Author.ToString(provider)}, {this.Title.ToString(provider)}, {this.Price.ToString("C", provider)}";
                 default:
                     throw new FormatException($"The {format} format string is not supported.");
             }

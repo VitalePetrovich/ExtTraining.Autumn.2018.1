@@ -47,18 +47,18 @@ namespace BookExtension
                 }
             }
             
-            return $"- Book record: {((Book)arg).Edition}";
+            return ((Book)arg).Edition.ToString(formatProvider);
         }
 
         private string HandleOtherFormats(string format, object arg)
         {
             if (arg is IFormattable)
                 return ((IFormattable)arg).ToString(format, CultureInfo.CurrentCulture);
-            else if (arg != null)
-                return arg.ToString();
-            else
-                return string.Empty;
 
+            if (arg != null)
+                return arg.ToString();
+            
+            return string.Empty;
         }
     }
 }
